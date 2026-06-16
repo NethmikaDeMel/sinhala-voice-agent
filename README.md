@@ -27,36 +27,9 @@ Browser Mic (PCM 16kHz)
 └─────────────────────────────────────────────────────────┘
 ```
 
-## Folder Structure
 
-```
-sinhala-voice-agent/
-├── app/
-│   ├── api/
-│   │   ├── deepgram-proxy/
-│   │   │   └── route.ts       # Issues Deepgram temp token (GET)
-│   │   ├── gemini-chat/
-│   │   │   └── route.ts       # Streams Gemini LLM response (POST)
-│   │   └── tts-stream/
-│   │       └── route.ts       # Proxies ElevenLabs audio stream (POST)
-│   ├── globals.css            # Tailwind v4 + custom keyframes
-│   ├── layout.tsx             # Root layout + font loading
-│   └── page.tsx               # Main UI page (client component)
-├── components/
-│   ├── VoiceOrb.tsx           # Animated central button (idle/listening/thinking/speaking)
-│   ├── TranscriptPanel.tsx    # Chat-bubble transcript display
-│   ├── StatusBadge.tsx        # Current state pill indicator
-│   └── ErrorToast.tsx         # Dismissible error notification
-├── hooks/
-│   └── useVoiceAgent.ts       # Core orchestration hook
-├── .env.local                 # Secret API keys (never commit)
-├── next.config.ts
-├── postcss.config.mjs
-├── package.json
-└── tsconfig.json
-```
 
-## Quick Start
+## Quick Start Guide If You to Try This Out Yourself
 
 ### 1. Clone & install
 
@@ -185,9 +158,3 @@ All API keys are **server-side only** (no `NEXT_PUBLIC_` prefix). The browser ne
 - `DEEPGRAM_API_KEY` → used only in `/api/deepgram-proxy` to issue short-lived tokens
 - `GEMINI_API_KEY` → used only in `/api/gemini-chat`
 - `ELEVENLABS_API_KEY` + `ELEVENLABS_VOICE_ID` → used only in `/api/tts-stream`
-
----
-
-## License
-
-MIT
