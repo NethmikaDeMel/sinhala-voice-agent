@@ -1,0 +1,149 @@
+/* =============================================================
+   app/globals.css
+   Tailwind CSS v4 entry point + custom keyframes for the voice UI
+   ============================================================= */
+
+@import "tailwindcss";
+
+/* ── Custom design tokens ──────────────────────────────────── */
+@theme {
+  /* Palette: deep indigo night sky with warm amber accents */
+  --color-void: #07080f;
+  --color-surface: #0f1120;
+  --color-surface-raised: #161929;
+  --color-border: #1e2340;
+  --color-muted: #3d4470;
+  --color-subtle: #6b72a8;
+  --color-text: #e8eaff;
+  --color-text-dim: #8b91c4;
+
+  /* Accent palette */
+  --color-accent: #7c6af7;
+  --color-accent-bright: #a594ff;
+  --color-accent-glow: #5a4bd1;
+  --color-warm: #f7a26a;
+  --color-warn: #f77a6a;
+
+  /* Sinhala-optimised type: Noto Sans Sinhala for script, Inter for UI */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sinhala: "Noto Sans Sinhala", "Noto Serif Sinhala", serif;
+
+  /* Radii */
+  --radius-xl: 1.25rem;
+  --radius-full: 9999px;
+}
+
+/* ── Base reset ─────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-void);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  min-height: 100%;
+  margin: 0;
+}
+
+/* ── Keyframe animations ────────────────────────────────────── */
+
+/* Slow ambient rotation for the outer halo ring */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Counter-rotation for the secondary ring */
+@keyframes spin-reverse {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+/* Pulsing glow for idle/listening state */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow:
+      0 0 20px 4px rgba(124, 106, 247, 0.3),
+      0 0 60px 12px rgba(124, 106, 247, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 35px 8px rgba(124, 106, 247, 0.55),
+      0 0 90px 24px rgba(124, 106, 247, 0.2);
+  }
+}
+
+/* Waveform bar bounce */
+@keyframes wave-bar {
+  0%, 100% { transform: scaleY(0.15); }
+  50%       { transform: scaleY(1); }
+}
+
+/* Ripple expand for "Listening" state */
+@keyframes ripple {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Fade-slide-up for transcript lines */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Utility classes that can't be expressed with Tailwind alone ── */
+
+.animate-spin-slow    { animation: spin-slow 8s linear infinite; }
+.animate-spin-reverse { animation: spin-reverse 6s linear infinite; }
+.animate-pulse-glow   { animation: pulse-glow 2.5s ease-in-out infinite; }
+.animate-ripple       { animation: ripple 1.6s ease-out infinite; }
+.animate-fade-up      { animation: fade-up 0.35s ease forwards; }
+
+/* Waveform bars — staggered delays */
+.wave-bar {
+  animation: wave-bar 0.8s ease-in-out infinite;
+  transform-origin: bottom;
+}
+.wave-bar:nth-child(1) { animation-delay: 0.00s; }
+.wave-bar:nth-child(2) { animation-delay: 0.10s; }
+.wave-bar:nth-child(3) { animation-delay: 0.20s; }
+.wave-bar:nth-child(4) { animation-delay: 0.30s; }
+.wave-bar:nth-child(5) { animation-delay: 0.20s; }
+.wave-bar:nth-child(6) { animation-delay: 0.10s; }
+.wave-bar:nth-child(7) { animation-delay: 0.00s; }
+
+/* Sinhala script rendering */
+.font-sinhala {
+  font-family: var(--font-sinhala);
+  line-height: 1.9;
+  letter-spacing: 0.01em;
+}
+
+/* Thin scrollbar for transcript box */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-muted) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar       { width: 4px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: var(--color-muted); border-radius: 2px; }
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .animate-spin-slow,
+  .animate-spin-reverse,
+  .animate-pulse-glow,
+  .animate-ripple,
+  .wave-bar {
+    animation: none;
+  }
+}
